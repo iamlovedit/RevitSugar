@@ -63,7 +63,21 @@
 	<PropertyGroup>
       <BaseOutputPath>..\..\Bundle\$(RevitVersion)</BaseOutputPath>
       <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+      <Authors>Young</Authors>
+      <RepositoryUrl>https://github.com/iamlovedit/RevitSugar</RepositoryUrl>
+      <Description>A library that wrap Revit API can help Revit developer work high-efficiency</Description>
+      <Title>RevitSugar</Title>
+      <PackageProjectUrl>https://revit.youngala.com</PackageProjectUrl>
+      <PackageIcon>panda.png</PackageIcon>
+      <Company>Youngala</Company>
     </PropertyGroup>
+
+	<ItemGroup>
+	  <None Include="..\..\Documents\panda.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
 
  <ItemGroup>
     <PackageReference Include="Revit_All_Main_Versions_API_x64" Version="$(RevitVersion).*">
