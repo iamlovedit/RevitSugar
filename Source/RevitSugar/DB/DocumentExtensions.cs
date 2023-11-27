@@ -5,7 +5,7 @@ namespace RevitSugar.DB
 {
     public static class DocumentExtensions
     {
-        public static T GetElement<T>(this Autodesk.Revit.DB.Document doc, ElementId id) where T : Element
+        public static T GetElement<T>(this Document doc, ElementId id) where T : Element
         {
             if (doc is null)
             {
@@ -18,7 +18,7 @@ namespace RevitSugar.DB
             return doc.GetElement(id) as T;
         }
 
-        public static T GetElement<T>(this Autodesk.Revit.DB.Document doc, int id) where T : Element
+        public static T GetElement<T>(this Document doc, int id) where T : Element
         {
             if (doc is null)
             {
@@ -31,7 +31,7 @@ namespace RevitSugar.DB
             return doc.GetElement(new ElementId(id)) as T;
         }
 
-        public static T GetElement<T>(this Autodesk.Revit.DB.Document doc, string guid) where T : Element
+        public static T GetElement<T>(this Document doc, string guid) where T : Element
         {
             if (doc is null)
             {
@@ -44,7 +44,7 @@ namespace RevitSugar.DB
             return doc.GetElement(guid) as T;
         }
 
-        public static T GetElement<T>(this Autodesk.Revit.DB.Document doc, Reference reference) where T : Element
+        public static T GetElement<T>(this Document doc, Reference reference) where T : Element
         {
             if (doc is null)
             {

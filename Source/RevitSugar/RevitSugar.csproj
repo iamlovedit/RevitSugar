@@ -53,6 +53,7 @@
 
 	<PropertyGroup>
       <BaseOutputPath>..\..\Bundle\$(RevitVersion)</BaseOutputPath>
+      <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     </PropertyGroup>
 
  <ItemGroup>
