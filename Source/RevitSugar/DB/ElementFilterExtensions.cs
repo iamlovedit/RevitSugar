@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RevitExtensions.DB
+namespace RevitSugar.DB
 {
-    public static class ElementFilterExtension
+    public static class ElementFilterExtensions
     {
         /// <summary>
         /// Create a ElementCollector <see cref="Autodesk.Revit.DB.FilteredElementCollector"/>
@@ -13,7 +13,7 @@ namespace RevitExtensions.DB
         /// <param name="doc"></param>
         /// <param name="view"></param>
         /// <returns></returns>
-        private static FilteredElementCollector GetCollector(Document doc, View view = null)
+        private static FilteredElementCollector GetCollector(Autodesk.Revit.DB.Document doc, View view = null)
         {
             return view == null ? new FilteredElementCollector(doc) : new FilteredElementCollector(doc, view.Id);
         }
@@ -26,7 +26,7 @@ namespace RevitExtensions.DB
         /// <param name="view"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public static IEnumerable<T> GetElementsByClass<T>(this Document doc, View view = null) where T : Element
+        public static IEnumerable<T> GetElementsByClass<T>(this Autodesk.Revit.DB.Document doc, View view = null) where T : Element
         {
             if (doc == null)
             {
@@ -48,7 +48,7 @@ namespace RevitExtensions.DB
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public static IEnumerable<T> GetElementsByCategory<T>(this Document doc, BuiltInCategory builtInCategory, View view = null) where T : Element
+        public static IEnumerable<T> GetElementsByCategory<T>(this Autodesk.Revit.DB.Document doc, BuiltInCategory builtInCategory, View view = null) where T : Element
         {
             if (doc == null)
             {
@@ -74,7 +74,7 @@ namespace RevitExtensions.DB
         /// <param name="view"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public static IEnumerable<T> GetElementsByCategory<T>(this Document doc, Category category, View view = null) where T : Element
+        public static IEnumerable<T> GetElementsByCategory<T>(this Autodesk.Revit.DB.Document doc, Category category, View view = null) where T : Element
         {
             if (doc == null)
             {
@@ -100,7 +100,7 @@ namespace RevitExtensions.DB
         /// <param name="view"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public static IEnumerable<T> GetElementsByFilter<T>(this Document doc, ElementFilter filter, View view = null) where T : Element
+        public static IEnumerable<T> GetElementsByFilter<T>(this Autodesk.Revit.DB.Document doc, Autodesk.Revit.DB.ElementFilter filter, View view = null) where T : Element
         {
             if (doc is null)
             {
