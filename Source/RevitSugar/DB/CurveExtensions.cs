@@ -214,98 +214,6 @@ namespace RevitSugar.DB
             return result;
         }
 
-        public static IList<PolyLine> GetPolyLinesFromLines(this IList<Curve> curves, out List<Curve> failedCurves)
-        {
-            if (curves is null)
-            {
-                throw new ArgumentNullException(nameof(curves));
-            }
-            var curvesList = curves.ToList();
-            var polylineList = new List<PolyLine>();
-            failedCurves = new List<Curve>();
-            do
-            {
-            Label:
-                var firstCurve = curvesList[0];
-                curvesList.RemoveAt(0);
-                IList<XYZ> plinePoints = null;
-                if (firstCurve.IsBound)
-                {
-                    if (firstCurve is Line)
-                    {
-                        plinePoints = new List<XYZ>
-                        {
-                            firstCurve.GetEndPoint(0),
-                            firstCurve.GetEndPoint(1)
-                        };
-                    }
-                    else if (firstCurve is Arc || firstCurve is Ellipse)
-                    {
-                        plinePoints = firstCurve.Tessellate();
-                    }
-
-                    JoinLinesToPline(ref curvesList, ref plinePoints);
-                }
-                else
-                {
-                    if (firstCurve is Line)
-                    {
-                        goto Label;
-                    }
-
-                    if (firstCurve is Arc || firstCurve is Ellipse)
-                    {
-                        plinePoints = firstCurve.Tessellate();
-                    }
-                }
-
-                if (plinePoints.Count > 2)
-                {
-                    PolyLine item = PolyLine.Create(plinePoints);
-                    polylineList.Add(item);
-                }
-                else
-                {
-                    failedCurves.Add(firstCurve);
-                }
-            }
-            while (curvesList.Count != 0);
-            return polylineList;
-        }
-
-
-        private static void JoinLinesToPline(ref List<Curve> curvesList, ref IList<XYZ> plinePoints)
-        {
-            var sourcePoint = plinePoints[plinePoints.Count - 1];
-            var index = 0;
-            var tempPoint = XYZ.Zero;
-            bool flag = false;
-            foreach (var curve in curvesList)
-            {
-                if (curve.GetEndPoint(0).IsAlmostEqualWith(sourcePoint, isIngoreZ: true))
-                {
-                    flag = true;
-                    tempPoint = curve.GetEndPoint(1);
-                    break;
-                }
-
-                if (curve.GetEndPoint(1).IsAlmostEqualWith(sourcePoint, isIngoreZ: true))
-                {
-                    flag = true;
-                    tempPoint = curve.GetEndPoint(0);
-                    break;
-                }
-                index++;
-            }
-            if (flag)
-            {
-                curvesList.RemoveAt(index);
-                plinePoints.Add(tempPoint);
-                JoinLinesToPline(ref curvesList, ref plinePoints);
-            }
-        }
-
-
         public static bool IsParalleWith(this Curve source, Curve target)
         {
             if (source is null)
@@ -335,7 +243,7 @@ namespace RevitSugar.DB
 
         public static bool IsContainExt(this Curve curve, XYZ pt, double tolerance = 1e-5)
         {
-            if (!(curve is Line))
+            if (curve is not Line)
             {
                 return curve.Distance(pt).IsAlmostEqual(0, tolerance);
             }
@@ -418,6 +326,19 @@ namespace RevitSugar.DB
                     return Arc.Create(arc.GetEndPoint(), arc.GetStartPoint(), arc.Evaluate(0.5, true));
             }
             throw new Exception("CreateReversedCurve - Unreachable");
+        }
+
+        public static Curve GetLocationCurve(this Element element)
+        {
+            if (element is null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+            if (element.Location is LocationCurve locationCurve)
+            {
+                return locationCurve.Curve;
+            }
+            throw new ArgumentException($"{element.Name} is not a curve base element");
         }
     }
 }

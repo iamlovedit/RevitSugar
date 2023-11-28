@@ -18,6 +18,7 @@ namespace RevitSugar.DB
 
         public static double FeetToMm(this double number)
         {
+
             return UnitUtils.ConvertFromInternalUnits(number, DisplayUnitType.DUT_MILLIMETERS);
         }
 

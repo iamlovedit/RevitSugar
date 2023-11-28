@@ -383,5 +383,19 @@ namespace RevitSugar.DB
             return Transform.CreateRotation(axis, angle).OfVector(vector);
         }
 
+
+        public static XYZ GetLocationPoint(this Element element)
+        {
+            if (element is null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+
+            if (element.Location is LocationPoint locationPoint)
+            {
+                return locationPoint.Point;
+            }
+            throw new ArgumentException($"{element.Name} is not a point base element");
+        }
     }
 }
