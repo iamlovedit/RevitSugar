@@ -5,7 +5,7 @@ namespace RevitSugar.DB
 {
     public static class MathExtensions
     {
-
+        private static string _typeId = "autodesk.unit.unit:millimeters-1.0.1";
         public static bool IsAlmostEqualZero(this double number, double tolerance = 1e-5)
         {
             return Math.Abs(number - 0) <= tolerance;
@@ -18,13 +18,20 @@ namespace RevitSugar.DB
 
         public static double FeetToMm(this double number)
         {
-
+#if R2018 || R2019 || R2020
             return UnitUtils.ConvertFromInternalUnits(number, DisplayUnitType.DUT_MILLIMETERS);
+#else
+            return UnitUtils.ConvertFromInternalUnits(number, new ForgeTypeId(_typeId));
+#endif
         }
 
         public static double MmToFeet(this double number)
         {
+#if R2018 || R2019 || R2020
             return UnitUtils.ConvertToInternalUnits(number, DisplayUnitType.DUT_MILLIMETERS);
+#else
+            return UnitUtils.ConvertToInternalUnits(number, new ForgeTypeId(_typeId));
+#endif
         }
 
         public static bool IsGreatThan(this double source, double target, double tolerance = 1e-5)
