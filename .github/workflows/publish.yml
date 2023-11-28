@@ -1,4 +1,4 @@
-name: tuna
+name: auto publish
 on: 
  push: 
   branches: 
@@ -22,7 +22,7 @@ jobs:
       uses: actions/checkout@v4.0.0
       
     - name: Build
-      run: dotnet build --configuration ${{ matrix.version }}
+      run: dotnet build Source\RevitSugar.sln --configuration ${{ matrix.version }}
       
     - name: Publish NuGet
       run: dotnet nuget push Bundle\${{ matrix.version }}\*.nupkg -k ${{secrets.NUGET_APIKEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
