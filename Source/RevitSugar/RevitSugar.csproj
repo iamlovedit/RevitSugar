@@ -76,7 +76,7 @@
   	</PropertyGroup>
 
 	<PropertyGroup>
-      <BaseOutputPath>..\..\Bundle\$(RevitVersion)</BaseOutputPath>
+      <BaseOutputPath>..\..\Bundle</BaseOutputPath>
       <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
       <Authors>Young</Authors>
       <RepositoryUrl>https://github.com/iamlovedit/RevitSugar</RepositoryUrl>
