@@ -1,0 +1,28 @@
+name: tuna
+on: 
+ push: 
+  branches: 
+   - main 
+
+
+jobs:
+ nuget:
+   strategy: 
+    matrix: 
+     version: [Release2018, Release2019, Release2020, Release2021, Release2022, Release2023, Release2024]
+   name: release nuget
+   runs-on: windows-latest
+   steps:
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v3.2.0
+      with:
+       dotnet-version: 6.0.2xx
+       
+    - name: checkout
+      uses: actions/checkout@v4.0.0
+      
+    - name: Build
+      run: dotnet build --configuration ${{ matrix.version }}
+      
+    - name: Publish NuGet
+      run: dotnet nuget push Bundle\${{ matrix.version }}\*.nupkg -k ${{secrets.NUGET_APIKEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
