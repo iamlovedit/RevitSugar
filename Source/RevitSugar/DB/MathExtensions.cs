@@ -5,7 +5,7 @@ namespace RevitSugar.DB
 {
     public static class MathExtensions
     {
-        private static string _typeId = "autodesk.unit.unit:millimeters-1.0.1";
+        private static readonly string _typeId = "autodesk.unit.unit:millimeters-1.0.1";
         public static bool IsAlmostEqualZero(this double number, double tolerance = 1e-5)
         {
             return Math.Abs(number - 0) <= tolerance;
