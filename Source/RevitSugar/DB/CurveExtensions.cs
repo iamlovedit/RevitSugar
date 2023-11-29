@@ -7,6 +7,18 @@ namespace RevitSugar.DB
 {
     public static class CurveExtensions
     {
+        /// <summary>
+        /// 获取给定曲线与目标曲线的交点的XYZ点集合。
+        /// </summary>
+        /// <param name="curve">要查找交点的曲线。</param>
+        /// <param name="target">要查找交点的目标曲线。</param>
+        /// <returns>表示曲线与目标曲线交点的XYZ点的IEnumerable集合。</returns>
+        /// <exception cref="ArgumentNullException">当曲线或目标为null时引发异常。</exception>
+        /// <remarks>
+        /// 该函数使用Intersect方法检查给定曲线和目标曲线是否相交。
+        /// 如果结果为SetComparisonResult.Overlap，则从resultArray中提取XYZ点。
+        /// 返回表示交点的XYZ点集合。
+        /// </remarks>
         public static IEnumerable<XYZ> GetCrorssPoints(this Curve curve, Curve target)
         {
             if (curve is null)
@@ -28,6 +40,11 @@ namespace RevitSugar.DB
             return points;
         }
 
+        /// <summary>
+        /// 获取一组曲线之间的交点。
+        /// </summary>
+        /// <param name="curves">要查找交点的曲线集合。</param>
+        /// <returns>表示交点的XYZ点的List集合。</returns>
         public static IList<XYZ> GetIntersectPoints(this IList<Curve> curves)
         {
             if (curves is null)
@@ -52,6 +69,13 @@ namespace RevitSugar.DB
             return result;
         }
 
+        /// <summary>
+        /// 判断给定点是否在曲线上，容差为指定的距离。
+        /// </summary>
+        /// <param name="curve">要检查的曲线。</param>
+        /// <param name="point">要检查的点。</param>
+        /// <param name="tolerance">曲线与点之间的距离容差。</param>
+        /// <returns>如果点在曲线上且在指定容差范围内，则返回true，否则返回false。</returns>
         public static bool IsPointOnCurve(this Curve curve, XYZ point, double tolerance = 1e-3)
         {
             if (curve is null)
@@ -67,6 +91,13 @@ namespace RevitSugar.DB
             return curve.Distance(point) <= tolerance;
         }
 
+        /// <summary>
+        /// 判断点是否投影到曲线上。
+        /// </summary>
+        /// <param name="curve">要投影到的曲线。</param>
+        /// <param name="point">要投影到曲线上的点。</param>
+        /// <param name="tolerance">用于将投影点与曲线的端点进行比较的容差。</param>
+        /// <returns>一个布尔值，指示点是否投影到曲线上。</returns>
         public static bool IsPointProjectAtCurve(this Curve curve, XYZ point, double tolerance = 1e-3)
         {
             if (curve is null)
@@ -83,6 +114,14 @@ namespace RevitSugar.DB
             return !(projectPoint.IsAlmostEqualTo(curve.GetEndPoint(0), tolerance) || projectPoint.IsAlmostEqualTo(curve.GetEndPoint(1), tolerance));
         }
 
+        /// <summary>
+        /// 判断给定曲线是否与目标曲线在指定容差范围内共线。
+        /// </summary>
+        /// <param name="source">要检查共线性的曲线。</param>
+        /// <param name="target">用于比较的参考曲线。</param>
+        /// <param name="tolerance">曲线之间允许的最大距离，以判断它们是否共线。 (可选)</param>
+        /// <returns>如果曲线在指定容差范围内共线，则返回true，否则返回false。</returns>
+        /// <exception cref="ArgumentNullException">如果源曲线或目标曲线为null，则引发异常。</exception>
         public static bool IsCollinearWith(this Curve source, Curve target, double tolerance = 1e-5)
         {
             if (source is null)
@@ -95,13 +134,16 @@ namespace RevitSugar.DB
                 throw new ArgumentNullException(nameof(target));
             }
 
-            using (var curve = source.Clone())
-            {
-                curve.MakeUnbound();
-                return curve.Distance(target.GetEndPoint(0)) <= tolerance && curve.Distance(target.GetEndPoint(1)) <= tolerance;
-            }
+            using var curve = source.Clone();
+            curve.MakeUnbound();
+            return curve.Distance(target.GetStartPoint()) <= tolerance && curve.Distance(target.GetEndPoint()) <= tolerance;
         }
 
+        /// <summary>
+        /// 获取曲线的中点。
+        /// </summary>
+        /// <param name="curve">要获取中点的曲线。</param>
+        /// <returns>曲线的中点。</returns>
         public static XYZ GetMiddlePoint(this Curve curve)
         {
             if (curve is null)
@@ -111,6 +153,14 @@ namespace RevitSugar.DB
             return curve.Evaluate(0.5, true);
         }
 
+        /// <summary>
+        /// 判断两个圆弧是否平行。
+        /// </summary>
+        /// <param name="source">要检查的圆弧</param>
+        /// <param name="target">用于检查的圆弧</param>
+        /// <param name="tolerance">检查容差</param>
+        /// <returns>如果两个圆弧平行，则返回true，否则返回false。</returns>
+        /// <exception cref="ArgumentNullException">如果源圆弧或目标圆弧为null，则引发异常。</exception>
         public static bool IsParalleWith(this Arc source, Arc target, double tolerance = 1e-5)
         {
             if (source is null)
@@ -125,6 +175,12 @@ namespace RevitSugar.DB
             return source.Center.DistanceTo(target.Center).IsAlmostEqualZero(tolerance);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="curve"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static XYZ GetStartPoint(this Curve curve)
         {
             if (curve is null)
@@ -134,6 +190,12 @@ namespace RevitSugar.DB
             return curve.GetEndPoint(0);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="curve"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static XYZ GetEndPoint(this Curve curve)
         {
             if (curve is null)
@@ -143,6 +205,13 @@ namespace RevitSugar.DB
             return curve.GetEndPoint(1);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static bool IsParalleWith(this Line source, Line target)
         {
             if (source is null)
@@ -160,6 +229,13 @@ namespace RevitSugar.DB
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="curve"></param>
+        /// <param name="isExtendZ"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static Outline GetOutline(this Curve curve, bool isExtendZ = false)
         {
             if (curve is null)
@@ -188,6 +264,12 @@ namespace RevitSugar.DB
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="curve"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static IList<Line> GetLines(this Curve curve)
         {
             if (curve is null)
@@ -214,6 +296,13 @@ namespace RevitSugar.DB
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static bool IsParalleWith(this Curve source, Curve target)
         {
             if (source is null)
@@ -240,7 +329,13 @@ namespace RevitSugar.DB
             return false;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="curve"></param>
+        /// <param name="pt"></param>
+        /// <param name="tolerance"></param>
+        /// <returns></returns>
         public static bool IsContainExt(this Curve curve, XYZ pt, double tolerance = 1e-5)
         {
             if (curve is not Line)
@@ -254,7 +349,12 @@ namespace RevitSugar.DB
             return curve.Distance(pt).IsAlmostEqual(0, tolerance);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="curves"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Exception"></exception>
         public static void SortCurvesContiguous(this IList<Curve> curves)
         {
             var sixteenth = 1d / 12d / 16d;
@@ -307,7 +407,14 @@ namespace RevitSugar.DB
                 }
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="curve"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="NotImplementedException"></exception>
+        /// <exception cref="Exception"></exception>
         private static Curve CreateReversedCurve(this Curve curve)
         {
             if (curve is null)
@@ -328,6 +435,13 @@ namespace RevitSugar.DB
             throw new Exception("CreateReversedCurve - Unreachable");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public static Curve GetLocationCurve(this Element element)
         {
             if (element is null)
