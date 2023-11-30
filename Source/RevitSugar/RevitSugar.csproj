@@ -70,7 +70,7 @@
   	</PropertyGroup>
 
 	<PropertyGroup>
-    	<Version>$(RevitVersion).0.0</Version>
+    	<Version>$(RevitVersion).0.1</Version>
     	<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   	</PropertyGroup>
