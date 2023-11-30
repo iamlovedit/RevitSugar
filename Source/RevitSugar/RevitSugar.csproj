@@ -97,9 +97,22 @@
 	</ItemGroup>
 
  <ItemGroup>
-    <PackageReference Include="Revit_All_Main_Versions_API_x64" Version="$(RevitVersion).*">
-      <GeneratePathProperty>False</GeneratePathProperty>
-    </PackageReference>
-  </ItemGroup>
+   <Reference Include="AdWindows">
+     <HintPath>..\..\ThirdParty\$(RevitVersion)\AdWindows.dll</HintPath>
+     <Private>True</Private>
+   </Reference>
+   <Reference Include="RevitAPI">
+     <HintPath>..\..\ThirdParty\$(RevitVersion)\RevitAPI.dll</HintPath>
+     <Private>True</Private>
+   </Reference>
+   <Reference Include="RevitAPIUI">
+     <HintPath>..\..\ThirdParty\$(RevitVersion)\RevitAPIUI.dll</HintPath>
+     <Private>True</Private>
+   </Reference>
+   <Reference Include="UIFramework">
+     <HintPath>..\..\ThirdParty\$(RevitVersion)\UIFramework.dll</HintPath>
+     <Private>True</Private>
+   </Reference>
+ </ItemGroup>
 	
 </Project>
