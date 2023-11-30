@@ -8,7 +8,7 @@ namespace RevitSugar.DB
         private static readonly string _typeId = "autodesk.unit.unit:millimeters-1.0.1";
         public static bool IsAlmostEqualZero(this double number, double tolerance = 1e-5)
         {
-            return Math.Abs(number - 0) <= tolerance;
+            return Math.Abs(number) <= tolerance;
         }
 
         public static bool IsAlmostEqual(this double number, double target, double tolerance = 1e-5)

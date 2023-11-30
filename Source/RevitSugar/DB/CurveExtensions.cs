@@ -176,11 +176,11 @@ namespace RevitSugar.DB
         }
 
         /// <summary>
-        /// 
+        ///  获取曲线的起点
         /// </summary>
-        /// <param name="curve"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <param name="curve">用于获取的曲线</param>
+        /// <returns>曲线的起点</returns>
+        /// <exception cref="ArgumentNullException">如果曲线null，引发异常。</exception>
         public static XYZ GetStartPoint(this Curve curve)
         {
             if (curve is null)
@@ -191,11 +191,11 @@ namespace RevitSugar.DB
         }
 
         /// <summary>
-        /// 
+        /// 获取曲线的终点
         /// </summary>
-        /// <param name="curve"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <param name="curve">用于获取的曲线</param>
+        /// <returns>曲线的终点</returns>
+        /// <exception cref="ArgumentNullException">如果曲线null，引发异常。</exception>
         public static XYZ GetEndPoint(this Curve curve)
         {
             if (curve is null)
@@ -206,12 +206,12 @@ namespace RevitSugar.DB
         }
 
         /// <summary>
-        /// 
+        /// 判断直线是否与目标直线平行
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="target"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <param name="source">要检查的直线</param>
+        /// <param name="target">用于检查的直线</param>
+        /// <returns>两直线平行返回true，否则返回false</returns>
+        /// <exception cref="ArgumentNullException">如果源直线或目标直线为null，引发异常</exception>
         public static bool IsParalleWith(this Line source, Line target)
         {
             if (source is null)
@@ -223,20 +223,19 @@ namespace RevitSugar.DB
             {
                 throw new ArgumentNullException(nameof(target));
             }
-            var sourceVec = source.GetEndPoint() - source.GetStartPoint();
-            var targetVer = target.GetEndPoint() - target.GetStartPoint();
-            return sourceVec.IsParallerWith(targetVer);
+            var sourceVector = source.GetEndPoint() - source.GetStartPoint();
+            var targetVector = target.GetEndPoint() - target.GetStartPoint();
+            return sourceVector.IsParallerWith(targetVector);
         }
 
-
         /// <summary>
-        /// 
+        /// 获取目标曲线的Outline
         /// </summary>
         /// <param name="curve"></param>
-        /// <param name="isExtendZ"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public static Outline GetOutline(this Curve curve, bool isExtendZ = false)
+        /// <param name="extendZ">是否设置扩展Z方向</param>
+        /// <returns>返回Outline </returns>
+        /// <exception cref="ArgumentNullException">如果曲线null，引发异常。</exception>
+        public static Outline GetOutline(this Curve curve, bool extendZ = false)
         {
             if (curve is null)
             {
@@ -253,7 +252,7 @@ namespace RevitSugar.DB
             }
             var xList = points.Select(p => p.X).OrderBy(x => x);
             var yList = points.Select(p => p.Y).OrderBy(y => y);
-            if (isExtendZ)
+            if (extendZ)
             {
                 return new Outline(new XYZ(xList.First(), yList.First(), double.MinValue), new XYZ(xList.Last(), yList.Last(), double.MaxValue));
             }
@@ -265,11 +264,11 @@ namespace RevitSugar.DB
         }
 
         /// <summary>
-        /// 
+        /// 获取曲线中的直线组
         /// </summary>
-        /// <param name="curve"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <param name="curve">目标曲线</param>
+        /// <returns>返回直线列表</returns>
+        /// <exception cref="ArgumentNullException">如果曲线null，引发异常。</exception>
         public static IList<Line> GetLines(this Curve curve)
         {
             if (curve is null)
@@ -277,10 +276,10 @@ namespace RevitSugar.DB
                 throw new ArgumentNullException(nameof(curve));
             }
 
-            var result = new List<Line>();
+            var lines = new List<Line>();
             if (curve is Line line)
             {
-                result.Add(line);
+                lines.Add(line);
             }
             else if (curve.IsBound)
             {
@@ -289,15 +288,15 @@ namespace RevitSugar.DB
                 {
                     if (points[i].TryMakeLineWith(points[i + 1], out var resultLine))
                     {
-                        result.Add(resultLine);
+                        lines.Add(resultLine);
                     }
                 }
             }
-            return result;
+            return lines;
         }
 
         /// <summary>
-        /// 
+        /// 两线是否平行
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
@@ -330,38 +329,49 @@ namespace RevitSugar.DB
         }
 
         /// <summary>
-        /// 
+        /// 点是否位于线上
         /// </summary>
-        /// <param name="curve"></param>
-        /// <param name="pt"></param>
-        /// <param name="tolerance"></param>
-        /// <returns></returns>
-        public static bool IsContainExt(this Curve curve, XYZ pt, double tolerance = 1e-5)
+        /// <param name="curve">线</param>
+        /// <param name="point">用于检测的点</param>
+        /// <param name="tolerance">容差</param>
+        /// <returns>如果点在线上则返回true，否则为false</returns>
+        public static bool ContainsPoint(this Curve curve, XYZ point, double tolerance = 1e-5)
         {
+            if (curve is null)
+            {
+                throw new ArgumentNullException(nameof(curve));
+            }
+
+            if (point is null)
+            {
+                throw new ArgumentNullException(nameof(point));
+            }
+
             if (curve is not Line)
             {
-                return curve.Distance(pt).IsAlmostEqual(0, tolerance);
+                return curve.Distance(point).IsAlmostEqualZero(tolerance);
             }
             if (curve.IsBound)
             {
-                return (pt.DistanceTo(curve.GetStartPoint()) + pt.DistanceTo(curve.GetEndPoint())).IsAlmostEqual(curve.Length, tolerance) && curve.Distance(pt).IsAlmostEqual(0.0, tolerance);
+                return (point.DistanceTo(curve.GetStartPoint()) + point.DistanceTo(curve.GetEndPoint()))
+                    .IsAlmostEqual(curve.Length, tolerance) && curve.Distance(point).IsAlmostEqualZero(tolerance);
             }
-            return curve.Distance(pt).IsAlmostEqual(0, tolerance);
+            return curve.Distance(point).IsAlmostEqualZero(tolerance);
         }
 
         /// <summary>
-        /// 
+        /// 将持续的线排序
         /// </summary>
-        /// <param name="curves"></param>
+        /// <param name="curves">线的列表</param>
         /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public static void SortCurvesContiguous(this IList<Curve> curves)
         {
-            var sixteenth = 1d / 12d / 16d;
             if (curves is null)
             {
                 throw new ArgumentNullException(nameof(curves));
             }
+            var sixteenth = 1d / 12d / 16d;
             var curveCount = curves.Count;
             for (int i = 0; i < curveCount; i++)
             {
@@ -403,45 +413,44 @@ namespace RevitSugar.DB
                 }
                 if (!found)
                 {
-                    throw new Exception("SortCurvesContiguous:" + " non-contiguous input curves");
+                    throw new ArgumentException("SortCurvesContiguous:" + " non-contiguous input curves");
                 }
             }
         }
+
         /// <summary>
-        /// 
+        /// 获取与线方向相反的线
         /// </summary>
-        /// <param name="curve"></param>
+        /// <param name="curve">目标线</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentNullException">如果线为null，已发异常</exception>
         /// <exception cref="NotImplementedException"></exception>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="ArgumentException"></exception>
         private static Curve CreateReversedCurve(this Curve curve)
         {
             if (curve is null)
             {
                 throw new ArgumentNullException(nameof(curve));
             }
-            if (!(curve is Line || curve is Arc))
+            if (curve is not Line || curve is not Arc)
             {
                 throw new NotImplementedException($"CreateReversedCurve for type {curve.GetType().Name}");
             }
-            switch (curve)
+            return curve switch
             {
-                case Line line:
-                    return Line.CreateBound(line.GetEndPoint(), line.GetStartPoint());
-                case Arc arc:
-                    return Arc.Create(arc.GetEndPoint(), arc.GetStartPoint(), arc.Evaluate(0.5, true));
-            }
-            throw new Exception("CreateReversedCurve - Unreachable");
+                Line line => Line.CreateBound(line.GetEndPoint(), line.GetStartPoint()),
+                Arc arc => Arc.Create(arc.GetEndPoint(), arc.GetStartPoint(), arc.Evaluate(0.5, true)),
+                _ => throw new ArgumentException("CreateReversedCurve - Unreachable"),
+            };
         }
 
         /// <summary>
-        /// 
+        /// 获取的位置线
         /// </summary>
-        /// <param name="element"></param>
+        /// <param name="element">目标图元</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentNullException">如果图元为null，则引发异常</exception>
+        /// <exception cref="ArgumentException">如果图元不是基于线的则会引发异常</exception>
         public static Curve GetLocationCurve(this Element element)
         {
             if (element is null)
