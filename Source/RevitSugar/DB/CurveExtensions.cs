@@ -19,7 +19,7 @@ namespace RevitSugar.DB
         /// 如果结果为SetComparisonResult.Overlap，则从resultArray中提取XYZ点。
         /// 返回表示交点的XYZ点集合。
         /// </remarks>
-        public static IEnumerable<XYZ> GetCrorssPoints(this Curve curve, Curve target)
+        public static IEnumerable<XYZ> GetCrossPoints(this Curve curve, Curve target)
         {
             if (curve is null)
             {
