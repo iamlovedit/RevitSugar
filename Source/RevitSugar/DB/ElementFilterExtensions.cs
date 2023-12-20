@@ -8,24 +8,24 @@ namespace RevitSugar.DB
     public static class ElementFilterExtensions
     {
         /// <summary>
-        /// Create a ElementCollector <see cref="Autodesk.Revit.DB.FilteredElementCollector"/>
+        /// 创建一个 ElementCollector <see cref="Autodesk.Revit.DB.FilteredElementCollector"/>。
         /// </summary>
-        /// <param name="doc"></param>
-        /// <param name="view"></param>
-        /// <returns></returns>
+        /// <param name="doc">文档对象。</param>
+        /// <param name="view">视图对象（可选）。</param>
+        /// <returns>返回一个 ElementCollector 对象。</returns>
         private static FilteredElementCollector GetCollector(Document doc, View view = null)
         {
             return view == null ? new FilteredElementCollector(doc) : new FilteredElementCollector(doc, view.Id);
         }
 
         /// <summary>
-        /// Collect elements by type of element, If view is not null,Only the visible elements of the current view 
+        /// 根据元素类型收集元素，如果 view 不为空，则只收集当前视图中可见的元素。
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="doc"></param>
-        /// <param name="view"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <typeparam name="T">元素类型。</typeparam>
+        /// <param name="doc">文档对象。</param>
+        /// <param name="view">视图对象（可选）。</param>
+        /// <returns>返回一个元素集合。</returns>
+        /// <exception cref="ArgumentNullException">如果 doc 参数为空，则抛出此异常。</exception>
         public static IEnumerable<T> GetElementsByClass<T>(this Document doc, View view = null, Func<T, bool> predicate = null) where T : Element
         {
             if (doc == null)
@@ -38,15 +38,15 @@ namespace RevitSugar.DB
         }
 
         /// <summary>
-        /// Collect elements by element's category, If view is not null,Only the visible elements of the current view 
+        /// 根据元素的类别收集元素，如果 view 不为空，则只收集当前视图中可见的元素。
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="doc"></param>
-        /// <param name="builtInCategory"></param>
-        /// <param name="view"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="ArgumentException"></exception>
+        /// <typeparam name="T">元素类型。</typeparam>
+        /// <param name="doc">文档对象。</param>
+        /// <param name="builtInCategory">内置类别。</param>
+        /// <param name="view">视图对象（可选）。</param>
+        /// <returns>返回一个元素集合。</returns>
+        /// <exception cref="ArgumentNullException">如果 doc 参数为空，则抛出此异常。</exception>
+        /// <exception cref="ArgumentException">如果 builtInCategory 参数为 BuiltInCategory.INVALID，则抛出此异常。</exception>
         public static IEnumerable<T> GetElementsByCategory<T>(this Document doc, BuiltInCategory builtInCategory, View view = null, Func<T, bool> predicate = null) where T : Element
         {
             if (doc == null)
@@ -64,14 +64,14 @@ namespace RevitSugar.DB
         }
 
         /// <summary>
-        /// Collect elements by category of element, If view is not null,Only the visible elements of the current view 
+        /// 根据元素的类别收集元素，如果 view 不为空，则只收集当前视图中可见的元素。
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="doc"></param>
-        /// <param name="category"></param>
-        /// <param name="view"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <typeparam name="T">元素类型。</typeparam>
+        /// <param name="doc">文档对象。</param>
+        /// <param name="category">元素类别。</param>
+        /// <param name="view">视图对象（可选）。</param>
+        /// <returns>返回一个元素集合。</returns>
+        /// <exception cref="ArgumentNullException">如果 doc 参数为空，则抛出此异常。</exception>
         public static IEnumerable<T> GetElementsByCategory<T>(this Document doc, Category category, View view = null, Func<T, bool> predicate = null) where T : Element
         {
             if (doc == null)
@@ -88,15 +88,16 @@ namespace RevitSugar.DB
             return predicate is null ? elements : elements.Where(predicate);
         }
 
+
         /// <summary>
-        /// Collect elements by a element filter, If view is not null,Only the visible elements of the current view 
+        /// 根据元素过滤器收集元素，如果 view 不为空，则只收集当前视图中可见的元素。
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="doc"></param>
-        /// <param name="filter"></param>
-        /// <param name="view"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <typeparam name="T">元素类型。</typeparam>
+        /// <param name="doc">文档对象。</param>
+        /// <param name="filter">元素过滤器。</param>
+        /// <param name="view">视图对象（可选）。</param>
+        /// <returns>返回一个元素集合。</returns>
+        /// <exception cref="ArgumentNullException">如果 doc 参数为空，则抛出此异常。</exception>
         public static IEnumerable<T> GetElementsByFilter<T>(this Document doc, ElementFilter filter, View view = null, Func<T, bool> predicate = null) where T : Element
         {
             if (doc is null)

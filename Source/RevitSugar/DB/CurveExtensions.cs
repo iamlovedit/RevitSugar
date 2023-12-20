@@ -298,8 +298,8 @@ namespace RevitSugar.DB
         /// <summary>
         /// 两线是否平行
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="target"></param>
+        /// <param name="source">用于检验的线</param>
+        /// <param name="target">目标曲线</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         public static bool IsParalleWith(this Curve source, Curve target)
