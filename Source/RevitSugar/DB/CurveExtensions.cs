@@ -445,7 +445,7 @@ namespace RevitSugar.DB
         }
 
         /// <summary>
-        /// 获取的位置线
+        /// 获取图元的位置线
         /// </summary>
         /// <param name="element">目标图元</param>
         /// <returns></returns>
@@ -462,6 +462,43 @@ namespace RevitSugar.DB
                 return locationCurve.Curve;
             }
             throw new ArgumentException($"{element.Name} is not a curve base element");
+        }
+
+        /// <summary>
+        /// 将直线拍平到某个高度
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="elevation"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+
+        public static Line Flatten(this Line line, double elevation = 0)
+        {
+            if (line is null)
+            {
+                throw new ArgumentNullException(nameof(line));
+            }
+            var startPoint = line.GetStartPoint().Flat(elevation);
+            var endPoint = line.GetEndPoint().Flat(elevation);
+            return Line.CreateBound(startPoint, endPoint);
+        }
+
+        /// <summary>
+        /// 将曲线偏移一定的高度
+        /// </summary>
+        /// <param name="curve"></param>
+        /// <param name="elevation"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static Curve OffsetVertical(this Curve curve, double elevation)
+        {
+            if (curve is null)
+            {
+                throw new ArgumentNullException(nameof(curve));
+            }
+            var midPoint = curve.GetMiddlePoint();
+            var transform = Transform.CreateTranslation(midPoint.Flat(elevation) - midPoint);
+            return curve.CreateTransformed(transform);
         }
     }
 }

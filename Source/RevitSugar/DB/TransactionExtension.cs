@@ -5,6 +5,14 @@ namespace RevitSugar.DB
 {
     public static class TransactionExtension
     {
+        /// <summary>
+        /// 运行事务
+        /// </summary>
+        /// <param name="doc">文档对象</param>
+        /// <param name="transactionName">事务名称</param>
+        /// <param name="action">要执行的操作</param>
+        /// <param name="failuresPreprocessor">处理失败的预处理器</param>
+        /// <returns>事务是否成功提交</returns>
         public static bool RunTransaction(this Document doc, string transactionName, Action action, IFailuresPreprocessor failuresPreprocessor = null)
         {
             if (doc == null)
@@ -40,6 +48,13 @@ namespace RevitSugar.DB
             }
         }
 
+        /// <summary>
+        /// 运行事务组
+        /// </summary>
+        /// <param name="doc">文档对象</param>
+        /// <param name="transactionName">事务名称</param>
+        /// <param name="action">要执行的操作</param>
+        /// <returns>事务是否成功提交</returns>
         public static bool RunTransactionGroup(this Document doc, string transactionName, Action<Document> action)
         {
             if (doc is null)

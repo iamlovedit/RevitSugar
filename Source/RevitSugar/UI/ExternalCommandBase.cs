@@ -6,6 +6,9 @@ using System.Diagnostics;
 
 namespace RevitSugar.UI
 {
+    /// <summary>
+    /// 外部命令基类
+    /// </summary>
     public abstract class ExternalCommandBase : IExternalCommand, IExternalCommandAvailability
     {
         protected Document RevitDoc { get; private set; }

@@ -5,6 +5,9 @@ using System.Diagnostics;
 
 namespace RevitSugar.UI.ExternalEventExtensions
 {
+    /// <summary>
+    /// 外部事件封装类
+    /// </summary>
     public class ExternalEventHelper
     {
         private static bool _initialized;

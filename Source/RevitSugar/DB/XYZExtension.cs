@@ -6,6 +6,16 @@ namespace RevitSugar.DB
 {
     public static class XYZExtension
     {
+
+        /// <summary>
+        /// 判断三点是否共线
+        /// </summary>
+        /// <param name="point1"></param>
+        /// <param name="point2"></param>
+        /// <param name="point3"></param>
+        /// <param name="tolerance"></param>
+        /// <returns>如果三点共线则返回true，否则为false</returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static bool AreThreePointsCollinear(this XYZ point1, XYZ point2, XYZ point3, double tolerance = 1e-6)
         {
             if (point1 is null)
@@ -32,6 +42,14 @@ namespace RevitSugar.DB
             return Math.Abs((y2 - y1) * (x3 - x1) - (y3 - y1) * (x2 - x1)) <= tolerance;
         }
 
+        /// <summary>
+        /// 判断两个向量是否垂直
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <param name="tolerance"></param>
+        /// <returns>如果两个向量垂直则返回true，否则为false</returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static bool IsVerticalWith(this XYZ source, XYZ target, double tolerance = 1e-6)
         {
             if (source is null)
@@ -46,7 +64,14 @@ namespace RevitSugar.DB
             return Math.Abs(source.DotProduct(target)) <= Math.Abs(tolerance);
         }
 
-
+        /// <summary>
+        /// 判断两个向量是否同向
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <param name="tolerance"></param>
+        /// <returns>如果两个向量同向则返回true，否则为false</returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static bool IsSameDirectionWith(this XYZ source, XYZ target, double tolerance = 1e-6)
         {
             if (source is null)
@@ -61,7 +86,15 @@ namespace RevitSugar.DB
             return source.AngleTo(target) <= Math.Abs(tolerance);
         }
 
-
+        /// <summary>
+        /// 判断两个向量是否平行
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <param name="tolerance"></param>
+        /// <param name="considerZeroVector"></param>
+        /// <returns>如果两个向量平行则返回true，否则为false</returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static bool IsParallerWith(this XYZ source, XYZ target, double tolerance = 1e-6, bool considerZeroVector = false)
         {
             if (source is null)
@@ -78,6 +111,14 @@ namespace RevitSugar.DB
                 source.IsOppositeDirectionWith(target, tolerance);
         }
 
+        /// <summary>
+        /// 判断两个向量是否为相反的方向
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <param name="tolerance"></param>
+        /// <returns>如果两个向量为相反的方向则返回true，否则为false</returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static bool IsOppositeDirectionWith(this XYZ source, XYZ target, double tolerance = 1e-6)
         {
             if (source is null)
@@ -93,7 +134,16 @@ namespace RevitSugar.DB
             return source.AngleTo(target.Negate()) <= Math.Abs(tolerance);
         }
 
-        public static bool IsAlmostEqualWith(this XYZ source, XYZ target, double tolerance = 1e-3, bool isIngoreZ = false)
+        /// <summary>
+        ///  判断两个向量是否相等
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <param name="tolerance"></param>
+        /// <param name="isIngoreZ">是否考虑Z轴</param>
+        /// <returns>如果两个向量相等则返回true，否则为false</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static bool IsAlmostEqualWith(this XYZ source, XYZ target, double tolerance = 1e-3, bool ingoreZ = false)
         {
             if (source is null)
             {
@@ -105,13 +155,20 @@ namespace RevitSugar.DB
                 throw new ArgumentNullException(nameof(target));
             }
             var isEqual = source.X.IsAlmostEqual(target.X, tolerance) && source.Y.IsAlmostEqual(target.Y, tolerance);
-            if (isIngoreZ)
+            if (ingoreZ)
             {
                 return isEqual;
             }
             return isEqual && source.Z.IsAlmostEqual(target.Z, tolerance);
         }
 
+        /// <summary>
+        /// 获取两点之间的方向
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <returns>返回两点之间的方向</returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static XYZ GetDirectionWith(this XYZ source, XYZ target)
         {
             if (source is null)
@@ -126,7 +183,13 @@ namespace RevitSugar.DB
             return (target - source).Normalize();
         }
 
-
+        /// <summary>
+        /// 将点拍平到某个z值
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="z"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static XYZ Flat(this XYZ source, double z = 0)
         {
             if (source is null)
@@ -137,7 +200,12 @@ namespace RevitSugar.DB
             return new XYZ(source.X, source.Y, z);
         }
 
-
+        /// <summary>
+        /// 深拷贝一个XYZ
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static XYZ DeepClone(this XYZ source)
         {
             if (source is null)
@@ -148,7 +216,14 @@ namespace RevitSugar.DB
             return new XYZ(source.X, source.Y, source.Z);
         }
 
-
+        /// <summary>
+        /// 判断是否可以投影到平面
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="face"></param>
+        /// <param name="result"></param>
+        /// <returns>如果可以投影返回true和投影结果</returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static bool CanProjectToFace(this XYZ source, Face face, out IntersectionResult result)
         {
             if (source is null)
@@ -164,7 +239,13 @@ namespace RevitSugar.DB
             return result != null;
         }
 
-
+        /// <summary>
+        /// 获取点到plane之间的距离
+        /// </summary>
+        /// <param name="point"></param>
+        /// <param name="plane"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static double GetDistanceToPlane(this XYZ point, Plane plane)
         {
             if (point is null)
@@ -180,7 +261,13 @@ namespace RevitSugar.DB
             return plane.Normal.DotProduct(point) - distance;
         }
 
-
+        /// <summary>
+        /// 将点投影到平面
+        /// </summary>
+        /// <param name="point"></param>
+        /// <param name="plane"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static XYZ ProjectToPlane(this XYZ point, Plane plane)
         {
             if (point is null)
@@ -195,6 +282,14 @@ namespace RevitSugar.DB
             return point - plane.Normal * point.GetDistanceToPlane(plane);
         }
 
+        /// <summary>
+        /// 获取点在指定方向上与plane的交点
+        /// </summary>
+        /// <param name="point"></param>
+        /// <param name="direction"></param>
+        /// <param name="plane"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static XYZ GetIntersertWithPlane(this XYZ point, XYZ direction, Plane plane)
         {
             if (point is null)
@@ -220,6 +315,13 @@ namespace RevitSugar.DB
             return point + number * direction;
         }
 
+        /// <summary>
+        /// 获取点在平面上的投影点
+        /// </summary>
+        /// <param name="plane"></param>
+        /// <param name="xyz"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static XYZ GetProjectPoint(this Plane plane, XYZ xyz)
         {
             if (plane is null)
@@ -241,6 +343,14 @@ namespace RevitSugar.DB
             return transform.OfPoint(point);
         }
 
+        /// <summary>
+        /// 尝试创建直线
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <param name="line"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static bool TryMakeLineWith(this XYZ source, XYZ target, out Line line)
         {
             if (source is null)
@@ -266,12 +376,23 @@ namespace RevitSugar.DB
             }
         }
 
-
+        /// <summary>
+        /// 获取点到曲线的距离
+        /// </summary>
+        /// <param name="point"></param>
+        /// <param name="curve"></param>
+        /// <returns></returns>
         public static double GetDistanceFromCurve(this XYZ point, Curve curve)
         {
             return curve is Arc arc && arc.Center.DistanceTo(point).IsAlmostEqualZero(1e-3) ? arc.Radius : curve.Distance(point);
         }
 
+        /// <summary>
+        /// 获取两个向量的最小夹角
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
         public static double GetMinAngleWithVector(this XYZ source, XYZ target)
         {
             var angle = Math.Abs(source.AngleTo(target));
@@ -290,6 +411,14 @@ namespace RevitSugar.DB
             return Math.Abs(Math.PI * 2 - angle);
         }
 
+        /// <summary>
+        /// 将向量在指定方向上偏移一定的距离
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="direction"></param>
+        /// <param name="distance"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static XYZ Offset(this XYZ source, XYZ direction, double distance)
         {
             if (source is null)
@@ -304,6 +433,13 @@ namespace RevitSugar.DB
             return source + direction * distance;
         }
 
+        /// <summary>
+        /// 获取垂直于直线的交点
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="line"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static XYZ GetVerticalIntersection(this XYZ source, Line line)
         {
             if (source is null)
@@ -329,46 +465,14 @@ namespace RevitSugar.DB
             return resultArray.get_Item(0).XYZPoint;
         }
 
-        public static XYZ GetPointToLineVecIntersection(this XYZ point, Line line)
-        {
-            var normal = line.Direction.Normalize();
-            var cross = normal.CrossProduct(XYZ.BasisZ);
-            Line crossLine = Line.CreateUnbound(point, cross);
-            SetComparisonResult result = line.Intersect(crossLine, out IntersectionResultArray results);
-            if (result != SetComparisonResult.Overlap)
-            {
-                return line.GetEndPoint();
-            }
-            if (results == null || results.Size != 1)
-            {
-                return line.GetEndPoint();
-            }
-            return results.get_Item(0).XYZPoint;
-        }
-
-
-        public static Line Flatten(this Line line, double elevation = 0)
-        {
-            if (line is null)
-            {
-                throw new ArgumentNullException(nameof(line));
-            }
-            var startPoint = line.GetStartPoint().Flat(elevation);
-            var endPoint = line.GetEndPoint().Flat(elevation);
-            return Line.CreateBound(startPoint, endPoint);
-        }
-
-        public static Curve OffsetVertical(this Curve curve, double elevation)
-        {
-            if (curve is null)
-            {
-                throw new ArgumentNullException(nameof(curve));
-            }
-            var midPoint = curve.GetMiddlePoint();
-            var transform = Transform.CreateTranslation(midPoint.Flat(elevation) - midPoint);
-            return curve.CreateTransformed(transform);
-        }
-
+        /// <summary>
+        /// 将向量围绕一个方向旋转角度
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <param name="axis"></param>
+        /// <param name="angle"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static XYZ Rotate(this XYZ vector, XYZ axis, double angle)
         {
             if (vector is null)
@@ -383,6 +487,13 @@ namespace RevitSugar.DB
             return Transform.CreateRotation(axis, angle).OfVector(vector);
         }
 
+        /// <summary>
+        /// 获取图元的放置点
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
 
         public static XYZ GetLocationPoint(this Element element)
         {

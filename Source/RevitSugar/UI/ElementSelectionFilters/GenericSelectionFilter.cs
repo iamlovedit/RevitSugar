@@ -4,6 +4,9 @@ using System;
 
 namespace RevitSugar.UI.ElementSelectionFilters
 {
+    /// <summary>
+    /// 通用选择过滤器
+    /// </summary>
     public class GenericSelectionFilter : ISelectionFilter
     {
         private readonly Predicate<Element> _elementPredicate;

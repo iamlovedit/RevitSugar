@@ -9,6 +9,11 @@ namespace RevitSugar.DB
 {
     public static class GeometryExtensions
     {
+        /// <summary>
+        /// 合并多个实体为一个实体
+        /// </summary>
+        /// <param name="solids">需要合并的实体列表</param>
+        /// <returns>合并后的实体</returns>
         public static Solid MergeSolids(this IList<Solid> solids)
         {
             if (solids is null)
@@ -34,6 +39,14 @@ namespace RevitSugar.DB
             return result;
         }
 
+        /// <summary>
+        /// 获取元素的实体列表
+        /// </summary>
+        /// <param name="element">要获取实体的元素</param>
+        /// <param name="options">选项</param>
+        /// <param name="getFamilyInstanceOriginGeometry">是否获取族实例原点几何体</param>
+        /// <param name="predicate">过滤条件</param>
+        /// <returns>实体列表</returns>
         public static IList<Solid> GetSolids(this Element element, Options options, bool getFamilyInstanceOriginGeometry = false, Predicate<Solid> predicate = null)
         {
             if (element is null)
@@ -79,6 +92,12 @@ namespace RevitSugar.DB
             }
         }
 
+        /// <summary>
+        /// 获取几何对象的实体列表
+        /// </summary>
+        /// <param name="geoObject">要获取实体的几何对象</param>
+        /// <param name="predicate">过滤条件</param>
+        /// <returns>实体列表</returns>
         public static IList<Solid> GetSolids(this GeometryObject geoObject, Predicate<Solid> predicate = null)
         {
             if (geoObject is null)
@@ -122,6 +141,14 @@ namespace RevitSugar.DB
             return solidList;
         }
 
+        /// <summary>
+        /// 根据条件获取元素的面列表
+        /// </summary>
+        /// <param name="element">要获取面的元素</param>
+        /// <param name="options">选项</param>
+        /// <param name="condition">过滤条件</param>
+        /// <param name="getFamilyInstanceOriginGeometry">是否获取族实例原点几何体</param>
+        /// <returns>面列表</returns>
         public static IList<Face> GetFacesByCondition(this Element element, Options options, Func<Face, bool> condition, bool getFamilyInstanceOriginGeometry = false)
         {
             if (element is null)
@@ -142,6 +169,13 @@ namespace RevitSugar.DB
             return (from solid in solids from Face face in solid.Faces where condition.Invoke(face) select face).ToList();
         }
 
+
+        /// <summary>
+        /// 获取选中的面
+        /// </summary>
+        /// <param name="document">文档对象</param>
+        /// <param name="pickedReference">选中的引用</param>
+        /// <returns>选中的面</returns>
         public static Face GetPickedFace(this Document document, Reference pickedReference)
         {
             if (document is null)
@@ -172,6 +206,13 @@ namespace RevitSugar.DB
             return hostElement.GetGeometryObjectFromReference(pickedReference) as Face;
         }
 
+
+        /// <summary>
+        /// 获取实体的体积
+        /// </summary>
+        /// <param name="solid">实体对象</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static double GetVolume(this Solid solid)
         {
             if (solid is null)
@@ -185,6 +226,12 @@ namespace RevitSugar.DB
             return solid.Volume;
         }
 
+        /// <summary>
+        /// 获取面的边
+        /// </summary>
+        /// <param name="face">平面对象</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static IList<Edge> GetEdgesFromFace(this Face face)
         {
             if (face is null)
@@ -202,6 +249,12 @@ namespace RevitSugar.DB
             return edges;
         }
 
+        /// <summary>
+        /// 获取平面获取plane
+        /// </summary>
+        /// <param name="face">平面对象</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static Plane GetPlaneFromFace(this Face face)
         {
             if (face is null)
@@ -215,6 +268,12 @@ namespace RevitSugar.DB
             return null;
         }
 
+        /// <summary>
+        /// 通过某点扩展包围盒
+        /// </summary>
+        /// <param name="boundingBox">包围盒</param>
+        /// <param name="point"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public static void ExtendByPoint(this BoundingBoxXYZ boundingBox, XYZ point)
         {
             if (boundingBox is null)
@@ -234,6 +293,12 @@ namespace RevitSugar.DB
                                       Math.Min(boundingBox.Max.Z, point.Z));
         }
 
+        /// <summary>
+        /// 扩展包围盒
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public static void ExtendByAnother(this BoundingBoxXYZ source, BoundingBoxXYZ target)
         {
             if (source is null)
@@ -250,6 +315,13 @@ namespace RevitSugar.DB
             source.ExtendByPoint(target.Max);
         }
 
+
+        /// <summary>
+        /// 获取元素列表的最大包围盒
+        /// </summary>
+        /// <param name="elements"></param>
+        /// <param name="view"></param>
+        /// <returns></returns>
         public static BoundingBoxXYZ GetMaxBoundingBox(this IEnumerable<Element> elements, View view = null)
         {
             var boundingBox = new BoundingBoxXYZ();

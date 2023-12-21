@@ -6,6 +6,12 @@ namespace RevitSugar.DB
 {
     public static class ViewExtensions
     {
+
+        /// <summary>
+        /// 从视图获取平面
+        /// </summary>
+        /// <param name="view">要获取平面的视图</param>
+        /// <returns>平面</returns>
         public static Plane GetPlaneFromView(this View view)
         {
             if (view is null)
@@ -16,6 +22,11 @@ namespace RevitSugar.DB
             return Plane.CreateByNormalAndOrigin(view.ViewDirection, view.Origin);
         }
 
+        /// <summary>
+        /// 获取平面视图的边界框
+        /// </summary>
+        /// <param name="view">要获取边界框的平面视图</param>
+        /// <returns>边界框</returns>
         public static BoundingBoxXYZ GetPlanViewBox(this ViewPlan view)
         {
             var doc = view.Document;
