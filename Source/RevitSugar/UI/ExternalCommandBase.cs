@@ -11,14 +11,33 @@ namespace RevitSugar.UI
     /// </summary>
     public abstract class ExternalCommandBase : IExternalCommand, IExternalCommandAvailability
     {
+        /// <summary>
+        /// 
+        /// </summary>
         protected Document RevitDoc { get; private set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected UIDocument RevitUidoc { get; private set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected Application RevitApp { get; private set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected UIApplication RevitUiApp { get; private set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="commandData"></param>
+        /// <param name="message"></param>
+        /// <param name="elements"></param>
+        /// <returns></returns>
         protected abstract Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements);
 
         Result IExternalCommand.Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
@@ -52,11 +71,21 @@ namespace RevitSugar.UI
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="applicationData"></param>
+        /// <param name="selectedCategories"></param>
+        /// <returns></returns>
         public virtual bool IsCommandAvailable(UIApplication applicationData, CategorySet selectedCategories)
         {
             return applicationData.ActiveUIDocument?.Document != null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         protected virtual bool PreExecute()
         {
             return true;

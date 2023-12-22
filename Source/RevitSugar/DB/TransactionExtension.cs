@@ -3,6 +3,9 @@ using System;
 
 namespace RevitSugar.DB
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class TransactionExtension
     {
         /// <summary>

@@ -3,6 +3,9 @@ using System;
 
 namespace RevitSugar.DB
 {
+    /// <summary>
+    /// 数学类扩展方法
+    /// </summary>
     public static class MathExtensions
     {
         private static readonly string _typeId = "autodesk.unit.unit:millimeters-1.0.1";
@@ -24,7 +27,7 @@ namespace RevitSugar.DB
         /// <param name="number">要比较的数</param>
         /// <param name="target">目标数</param>
         /// <param name="tolerance">容差</param>
-        /// <returns>如果两个数接近则返回true，否则为false</return
+        /// <returns>如果两个数接近则返回true，否则为false</returns>
         public static bool IsAlmostEqual(this double number, double target, double tolerance = 1e-5)
         {
             return Math.Abs(number - target) <= tolerance;

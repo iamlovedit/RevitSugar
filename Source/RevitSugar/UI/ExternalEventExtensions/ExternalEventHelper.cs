@@ -14,6 +14,9 @@ namespace RevitSugar.UI.ExternalEventExtensions
         private static ExternalEvent _externalEvent;
         private static ExternalEventContainer _container;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static void Initialize()
         {
             if (!_initialized)
@@ -31,12 +34,21 @@ namespace RevitSugar.UI.ExternalEventExtensions
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="externalName"></param>
+        /// <returns></returns>
         public static ExternalEventRequest Invoke(Action<UIApplication> action, string externalName = null)
         {
             _container.Append(new KeyValuePair<string, Action<UIApplication>>(externalName ?? new Guid().ToString(), action));
             return _externalEvent.Raise();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static void Dispose()
         {
             if (_initialized)

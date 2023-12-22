@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace RevitSugar.DB
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class ViewExtensions
     {
 

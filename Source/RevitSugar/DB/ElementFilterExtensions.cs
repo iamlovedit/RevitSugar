@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace RevitSugar.DB
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class ElementFilterExtensions
     {
         /// <summary>
@@ -24,8 +27,9 @@ namespace RevitSugar.DB
         /// <typeparam name="T">元素类型。</typeparam>
         /// <param name="doc">文档对象。</param>
         /// <param name="view">视图对象（可选）。</param>
+        /// <param name="predicate"></param>
         /// <returns>返回一个元素集合。</returns>
-        /// <exception cref="ArgumentNullException">如果 doc 参数为空，则抛出此异常。</exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException">如果 doc 参数为空，则抛出此异常。</exception>
         public static IEnumerable<T> GetElementsByClass<T>(this Document doc, View view = null, Func<T, bool> predicate = null) where T : Element
         {
             if (doc == null)
@@ -44,9 +48,10 @@ namespace RevitSugar.DB
         /// <param name="doc">文档对象。</param>
         /// <param name="builtInCategory">内置类别。</param>
         /// <param name="view">视图对象（可选）。</param>
+        /// <param name="predicate"></param>
         /// <returns>返回一个元素集合。</returns>
-        /// <exception cref="ArgumentNullException">如果 doc 参数为空，则抛出此异常。</exception>
-        /// <exception cref="ArgumentException">如果 builtInCategory 参数为 BuiltInCategory.INVALID，则抛出此异常。</exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException">如果 doc 参数为空，则抛出此异常。</exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentException">如果 builtInCategory 参数为 BuiltInCategory.INVALID，则抛出此异常。</exception>
         public static IEnumerable<T> GetElementsByCategory<T>(this Document doc, BuiltInCategory builtInCategory, View view = null, Func<T, bool> predicate = null) where T : Element
         {
             if (doc == null)
@@ -70,8 +75,9 @@ namespace RevitSugar.DB
         /// <param name="doc">文档对象。</param>
         /// <param name="category">元素类别。</param>
         /// <param name="view">视图对象（可选）。</param>
+        /// <param name="predicate"></param> 
         /// <returns>返回一个元素集合。</returns>
-        /// <exception cref="ArgumentNullException">如果 doc 参数为空，则抛出此异常。</exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException">如果 doc 参数为空，则抛出此异常。</exception>
         public static IEnumerable<T> GetElementsByCategory<T>(this Document doc, Category category, View view = null, Func<T, bool> predicate = null) where T : Element
         {
             if (doc == null)
@@ -96,8 +102,9 @@ namespace RevitSugar.DB
         /// <param name="doc">文档对象。</param>
         /// <param name="filter">元素过滤器。</param>
         /// <param name="view">视图对象（可选）。</param>
+        /// <param name="predicate"></param> 
         /// <returns>返回一个元素集合。</returns>
-        /// <exception cref="ArgumentNullException">如果 doc 参数为空，则抛出此异常。</exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException">如果 doc 参数为空，则抛出此异常。</exception>
         public static IEnumerable<T> GetElementsByFilter<T>(this Document doc, ElementFilter filter, View view = null, Func<T, bool> predicate = null) where T : Element
         {
             if (doc is null)

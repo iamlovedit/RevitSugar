@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace RevitSugar.DB
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class CurveExtensions
     {
         /// <summary>
@@ -13,7 +16,7 @@ namespace RevitSugar.DB
         /// <param name="curve">要查找交点的曲线。</param>
         /// <param name="target">要查找交点的目标曲线。</param>
         /// <returns>表示曲线与目标曲线交点的XYZ点的IEnumerable集合。</returns>
-        /// <exception cref="ArgumentNullException">当曲线或目标为null时引发异常。</exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException">当曲线或目标为null时引发异常。</exception>
         /// <remarks>
         /// 该函数使用Intersect方法检查给定曲线和目标曲线是否相交。
         /// 如果结果为SetComparisonResult.Overlap，则从resultArray中提取XYZ点。
@@ -121,7 +124,7 @@ namespace RevitSugar.DB
         /// <param name="target">用于比较的参考曲线。</param>
         /// <param name="tolerance">曲线之间允许的最大距离，以判断它们是否共线。 (可选)</param>
         /// <returns>如果曲线在指定容差范围内共线，则返回true，否则返回false。</returns>
-        /// <exception cref="ArgumentNullException">如果源曲线或目标曲线为null，则引发异常。</exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException">如果源曲线或目标曲线为null，则引发异常。</exception>
         public static bool IsCollinearWith(this Curve source, Curve target, double tolerance = 1e-5)
         {
             if (source is null)
@@ -160,7 +163,7 @@ namespace RevitSugar.DB
         /// <param name="target">用于检查的圆弧</param>
         /// <param name="tolerance">检查容差</param>
         /// <returns>如果两个圆弧平行，则返回true，否则返回false。</returns>
-        /// <exception cref="ArgumentNullException">如果源圆弧或目标圆弧为null，则引发异常。</exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException">如果源圆弧或目标圆弧为null，则引发异常。</exception>
         public static bool IsParalleWith(this Arc source, Arc target, double tolerance = 1e-5)
         {
             if (source is null)
@@ -180,7 +183,7 @@ namespace RevitSugar.DB
         /// </summary>
         /// <param name="curve">用于获取的曲线</param>
         /// <returns>曲线的起点</returns>
-        /// <exception cref="ArgumentNullException">如果曲线null，引发异常。</exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException">如果曲线null，引发异常。</exception>
         public static XYZ GetStartPoint(this Curve curve)
         {
             if (curve is null)
@@ -195,7 +198,7 @@ namespace RevitSugar.DB
         /// </summary>
         /// <param name="curve">用于获取的曲线</param>
         /// <returns>曲线的终点</returns>
-        /// <exception cref="ArgumentNullException">如果曲线null，引发异常。</exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException">如果曲线null，引发异常。</exception>
         public static XYZ GetEndPoint(this Curve curve)
         {
             if (curve is null)
@@ -211,7 +214,7 @@ namespace RevitSugar.DB
         /// <param name="source">要检查的直线</param>
         /// <param name="target">用于检查的直线</param>
         /// <returns>两直线平行返回true，否则返回false</returns>
-        /// <exception cref="ArgumentNullException">如果源直线或目标直线为null，引发异常</exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException">如果源直线或目标直线为null，引发异常</exception>
         public static bool IsParalleWith(this Line source, Line target)
         {
             if (source is null)
@@ -234,7 +237,7 @@ namespace RevitSugar.DB
         /// <param name="curve"></param>
         /// <param name="extendZ">是否设置扩展Z方向</param>
         /// <returns>返回Outline </returns>
-        /// <exception cref="ArgumentNullException">如果曲线null，引发异常。</exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException">如果曲线null，引发异常。</exception>
         public static Outline GetOutline(this Curve curve, bool extendZ = false)
         {
             if (curve is null)
@@ -268,7 +271,7 @@ namespace RevitSugar.DB
         /// </summary>
         /// <param name="curve">目标曲线</param>
         /// <returns>返回直线列表</returns>
-        /// <exception cref="ArgumentNullException">如果曲线null，引发异常。</exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException">如果曲线null，引发异常。</exception>
         public static IList<Line> GetLines(this Curve curve)
         {
             if (curve is null)
@@ -301,7 +304,7 @@ namespace RevitSugar.DB
         /// <param name="source">用于检验的线</param>
         /// <param name="target">目标曲线</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static bool IsParalleWith(this Curve source, Curve target)
         {
             if (source is null)
@@ -363,8 +366,8 @@ namespace RevitSugar.DB
         /// 将持续的线排序
         /// </summary>
         /// <param name="curves">线的列表</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentException"></exception>
         public static void SortCurvesContiguous(this IList<Curve> curves)
         {
             if (curves is null)
@@ -423,9 +426,9 @@ namespace RevitSugar.DB
         /// </summary>
         /// <param name="curve">目标线</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException">如果线为null，已发异常</exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException">如果线为null，已发异常</exception>
         /// <exception cref="NotImplementedException"></exception>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentException"></exception>
         private static Curve CreateReversedCurve(this Curve curve)
         {
             if (curve is null)
@@ -449,8 +452,8 @@ namespace RevitSugar.DB
         /// </summary>
         /// <param name="element">目标图元</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException">如果图元为null，则引发异常</exception>
-        /// <exception cref="ArgumentException">如果图元不是基于线的则会引发异常</exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException">如果图元为null，则引发异常</exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentException">如果图元不是基于线的则会引发异常</exception>
         public static Curve GetLocationCurve(this Element element)
         {
             if (element is null)
@@ -470,8 +473,7 @@ namespace RevitSugar.DB
         /// <param name="line"></param>
         /// <param name="elevation"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static Line Flatten(this Line line, double elevation = 0)
         {
             if (line is null)
@@ -489,7 +491,7 @@ namespace RevitSugar.DB
         /// <param name="curve"></param>
         /// <param name="elevation"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static Curve OffsetVertical(this Curve curve, double elevation)
         {
             if (curve is null)

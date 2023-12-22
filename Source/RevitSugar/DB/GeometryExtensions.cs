@@ -7,6 +7,9 @@ using System.Linq.Expressions;
 
 namespace RevitSugar.DB
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class GeometryExtensions
     {
         /// <summary>
@@ -212,7 +215,7 @@ namespace RevitSugar.DB
         /// </summary>
         /// <param name="solid">实体对象</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static double GetVolume(this Solid solid)
         {
             if (solid is null)
@@ -231,7 +234,7 @@ namespace RevitSugar.DB
         /// </summary>
         /// <param name="face">平面对象</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static IList<Edge> GetEdgesFromFace(this Face face)
         {
             if (face is null)
@@ -254,7 +257,7 @@ namespace RevitSugar.DB
         /// </summary>
         /// <param name="face">平面对象</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static Plane GetPlaneFromFace(this Face face)
         {
             if (face is null)
@@ -273,7 +276,7 @@ namespace RevitSugar.DB
         /// </summary>
         /// <param name="boundingBox">包围盒</param>
         /// <param name="point"></param>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static void ExtendByPoint(this BoundingBoxXYZ boundingBox, XYZ point)
         {
             if (boundingBox is null)
@@ -298,7 +301,7 @@ namespace RevitSugar.DB
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static void ExtendByAnother(this BoundingBoxXYZ source, BoundingBoxXYZ target)
         {
             if (source is null)

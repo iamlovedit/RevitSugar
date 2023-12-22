@@ -4,6 +4,9 @@ using System.Diagnostics;
 
 namespace RevitSugar.DB
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class XYZExtension
     {
 
@@ -15,7 +18,7 @@ namespace RevitSugar.DB
         /// <param name="point3"></param>
         /// <param name="tolerance"></param>
         /// <returns>如果三点共线则返回true，否则为false</returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static bool AreThreePointsCollinear(this XYZ point1, XYZ point2, XYZ point3, double tolerance = 1e-6)
         {
             if (point1 is null)
@@ -49,7 +52,7 @@ namespace RevitSugar.DB
         /// <param name="target"></param>
         /// <param name="tolerance"></param>
         /// <returns>如果两个向量垂直则返回true，否则为false</returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static bool IsVerticalWith(this XYZ source, XYZ target, double tolerance = 1e-6)
         {
             if (source is null)
@@ -71,7 +74,7 @@ namespace RevitSugar.DB
         /// <param name="target"></param>
         /// <param name="tolerance"></param>
         /// <returns>如果两个向量同向则返回true，否则为false</returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static bool IsSameDirectionWith(this XYZ source, XYZ target, double tolerance = 1e-6)
         {
             if (source is null)
@@ -94,7 +97,7 @@ namespace RevitSugar.DB
         /// <param name="tolerance"></param>
         /// <param name="considerZeroVector"></param>
         /// <returns>如果两个向量平行则返回true，否则为false</returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static bool IsParallerWith(this XYZ source, XYZ target, double tolerance = 1e-6, bool considerZeroVector = false)
         {
             if (source is null)
@@ -118,7 +121,7 @@ namespace RevitSugar.DB
         /// <param name="target"></param>
         /// <param name="tolerance"></param>
         /// <returns>如果两个向量为相反的方向则返回true，否则为false</returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static bool IsOppositeDirectionWith(this XYZ source, XYZ target, double tolerance = 1e-6)
         {
             if (source is null)
@@ -140,9 +143,9 @@ namespace RevitSugar.DB
         /// <param name="source"></param>
         /// <param name="target"></param>
         /// <param name="tolerance"></param>
-        /// <param name="isIngoreZ">是否考虑Z轴</param>
+        /// <param name="ingoreZ">是否考虑Z轴</param>
         /// <returns>如果两个向量相等则返回true，否则为false</returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static bool IsAlmostEqualWith(this XYZ source, XYZ target, double tolerance = 1e-3, bool ingoreZ = false)
         {
             if (source is null)
@@ -168,7 +171,7 @@ namespace RevitSugar.DB
         /// <param name="source"></param>
         /// <param name="target"></param>
         /// <returns>返回两点之间的方向</returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static XYZ GetDirectionWith(this XYZ source, XYZ target)
         {
             if (source is null)
@@ -189,7 +192,7 @@ namespace RevitSugar.DB
         /// <param name="source"></param>
         /// <param name="z"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static XYZ Flat(this XYZ source, double z = 0)
         {
             if (source is null)
@@ -205,7 +208,7 @@ namespace RevitSugar.DB
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static XYZ DeepClone(this XYZ source)
         {
             if (source is null)
@@ -223,7 +226,7 @@ namespace RevitSugar.DB
         /// <param name="face"></param>
         /// <param name="result"></param>
         /// <returns>如果可以投影返回true和投影结果</returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static bool CanProjectToFace(this XYZ source, Face face, out IntersectionResult result)
         {
             if (source is null)
@@ -245,7 +248,7 @@ namespace RevitSugar.DB
         /// <param name="point"></param>
         /// <param name="plane"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static double GetDistanceToPlane(this XYZ point, Plane plane)
         {
             if (point is null)
@@ -267,7 +270,7 @@ namespace RevitSugar.DB
         /// <param name="point"></param>
         /// <param name="plane"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static XYZ ProjectToPlane(this XYZ point, Plane plane)
         {
             if (point is null)
@@ -289,7 +292,7 @@ namespace RevitSugar.DB
         /// <param name="direction"></param>
         /// <param name="plane"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static XYZ GetIntersertWithPlane(this XYZ point, XYZ direction, Plane plane)
         {
             if (point is null)
@@ -321,7 +324,7 @@ namespace RevitSugar.DB
         /// <param name="plane"></param>
         /// <param name="xyz"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static XYZ GetProjectPoint(this Plane plane, XYZ xyz)
         {
             if (plane is null)
@@ -350,7 +353,7 @@ namespace RevitSugar.DB
         /// <param name="target"></param>
         /// <param name="line"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static bool TryMakeLineWith(this XYZ source, XYZ target, out Line line)
         {
             if (source is null)
@@ -418,7 +421,7 @@ namespace RevitSugar.DB
         /// <param name="direction"></param>
         /// <param name="distance"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static XYZ Offset(this XYZ source, XYZ direction, double distance)
         {
             if (source is null)
@@ -439,7 +442,7 @@ namespace RevitSugar.DB
         /// <param name="source"></param>
         /// <param name="line"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static XYZ GetVerticalIntersection(this XYZ source, Line line)
         {
             if (source is null)
@@ -472,7 +475,7 @@ namespace RevitSugar.DB
         /// <param name="axis"></param>
         /// <param name="angle"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public static XYZ Rotate(this XYZ vector, XYZ axis, double angle)
         {
             if (vector is null)
@@ -492,8 +495,8 @@ namespace RevitSugar.DB
         /// </summary>
         /// <param name="element"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentException"></exception>
 
         public static XYZ GetLocationPoint(this Element element)
         {
