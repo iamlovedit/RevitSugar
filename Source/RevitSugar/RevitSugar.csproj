@@ -70,7 +70,7 @@
   	</PropertyGroup>
 
 	<PropertyGroup>
-    	<Version>$(RevitVersion).0.1</Version>
+    	<Version>$(RevitVersion).0.0.1</Version>
     	<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   	</PropertyGroup>
@@ -87,6 +87,8 @@
       <Company>Youngala</Company>
 	  <Copyright>young@2021-2023</Copyright>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <RepositoryType>git</RepositoryType>
+	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
     </PropertyGroup>
 
 	<ItemGroup>
