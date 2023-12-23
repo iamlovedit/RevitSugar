@@ -68,7 +68,7 @@ namespace RevitSugar.DB
         /// <param name="target">目标数</param>
         /// <param name="tolerance">容差</param>
         /// <returns>如果源数大于目标数则返回true，否则为false</returns>
-        public static bool IsGreatThan(this double source, double target, double tolerance = 1e-5)
+        public static bool IsGreaterThan(this double source, double target, double tolerance = 1e-5)
         {
             return source - target > tolerance;
         }
@@ -80,7 +80,7 @@ namespace RevitSugar.DB
         /// <param name="target">目标数</param>
         /// <param name="tolerance">容差</param>
         /// <returns>如果源数大于等于目标数则返回true，否则为false</returns>
-        public static bool IsGreatThanOrEqualWith(this double source, double target, double tolerance = 1e-5)
+        public static bool IsGreaterThanOrEqualWith(this double source, double target, double tolerance = 1e-5)
         {
             return source - target >= -tolerance;
         }
