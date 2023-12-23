@@ -87,5 +87,45 @@ namespace RevitSugar.DB
             }
             return doc.GetElement(reference) as T;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <returns></returns>
+        public static ICreatable AsCreatable(this Document doc)
+        {
+            return new Creatable(doc);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <returns></returns>
+        public static IUpdateable AsUpdateable(this Document doc)
+        {
+            return new Updateable(doc);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <returns></returns>
+        public static IDeleteable AsDeleteable(this Document doc)
+        {
+            return new Deleteable(doc);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <returns></returns>
+        public static IQueryable AsQueryable(this Document doc)
+        {
+            return new Queryable(doc);
+        }
     }
 }
