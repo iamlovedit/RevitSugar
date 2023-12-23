@@ -368,7 +368,7 @@ namespace RevitSugar.DB
         /// <param name="curves">线的列表</param>
         /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         /// <exception cref="Autodesk.Revit.Exceptions.ArgumentException"></exception>
-        public static void SortCurvesContiguous(this IList<Curve> curves)
+        public static void SortContiguousCurves(this IList<Curve> curves)
         {
             if (curves is null)
             {
