@@ -15,7 +15,7 @@ namespace RevitSugar.DB
         /// 
         /// </summary>
         /// <param name="doc"></param>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         public Queryable(Document doc)
         {
             _doc = doc ?? throw new ArgumentNullException(nameof(doc));

@@ -58,7 +58,24 @@ namespace RevitSugar.DB
         /// <returns></returns>
         FamilyInstance CreateWindow(XYZ location, FamilySymbol symbol, Element host, StructuralType structuralType = StructuralType.NonStructural);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="curve"></param>
+        /// <param name="symbol"></param>
+        /// <param name="level"></param>
+        /// <param name="structuralType"></param>
+        /// <returns></returns>
+        FamilyInstance CreateBeam(Curve curve,FamilySymbol symbol,Level level, StructuralType structuralType = StructuralType.Beam);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="symbol"></param>
+        /// <param name="specView"></param>
+        /// <returns></returns>
+        FamilyInstance CreateDetailComponents(Line line, FamilySymbol symbol, View specView);
         /// <summary>
         /// 
         /// </summary>
@@ -87,6 +104,8 @@ namespace RevitSugar.DB
         /// <param name="normal"></param>
         /// <returns></returns>
         Floor CreateFloor(CurveArray profile, FloorType floorType, Level level, bool structural, XYZ normal);
+
+
     }
 
 }

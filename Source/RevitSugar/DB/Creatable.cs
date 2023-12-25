@@ -16,6 +16,46 @@ namespace RevitSugar.DB
             _doc = doc ?? throw new ArgumentNullException(nameof(doc));
         }
 
+        public FamilyInstance CreateBeam(Curve curve, FamilySymbol symbol, Level level, StructuralType structuralType = StructuralType.Beam)
+        {
+            if (curve is null)
+            {
+                throw new ArgumentNullException(nameof(curve));
+            }
+
+            if (symbol is null)
+            {
+                throw new ArgumentNullException(nameof(symbol));
+            }
+
+            if (level is null)
+            {
+                throw new ArgumentNullException(nameof(level));
+            }
+
+            return _doc.Create.NewFamilyInstance(curve, symbol, level, structuralType);
+        }
+
+        public FamilyInstance CreateDetailComponents(Line line, FamilySymbol symbol, View specView)
+        {
+            if (line is null)
+            {
+                throw new ArgumentNullException(nameof(line));
+            }
+
+            if (symbol is null)
+            {
+                throw new ArgumentNullException(nameof(symbol));
+            }
+
+            if (specView is null)
+            {
+                throw new ArgumentNullException(nameof(specView));
+            }
+
+            return _doc.Create.NewFamilyInstance(line, symbol, specView);
+        }
+
         public FamilyInstance CreateDoor(XYZ location, FamilySymbol symbol, Element host, StructuralType structuralType = StructuralType.NonStructural)
         {
             if (location is null)
