@@ -386,7 +386,7 @@ namespace RevitSugar.DB
                 {
                     var point = curves[j].GetStartPoint();
 
-                    if (point.DistanceTo(endPoint).IsGreatThan(sixteenth))
+                    if (point.DistanceTo(endPoint).IsGreaterThan(sixteenth))
                     {
                         if (i + 1 != j)
                         {
@@ -398,7 +398,7 @@ namespace RevitSugar.DB
                         break;
                     }
                     point = curves[j].GetEndPoint();
-                    if (point.DistanceTo(endPoint).IsGreatThan(sixteenth))
+                    if (point.DistanceTo(endPoint).IsGreaterThan(sixteenth))
                     {
                         if (i + 1 == j)
                         {

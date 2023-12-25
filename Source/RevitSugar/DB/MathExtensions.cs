@@ -94,7 +94,7 @@ namespace RevitSugar.DB
         /// <returns>如果源数小于目标数则返回true，否则为false</returns>
         public static bool IsLessThan(this double source, double target, double tolerance = 1e-5)
         {
-            return !IsGreatThanOrEqualWith(source, target, tolerance);
+            return !IsGreaterThanOrEqualWith(source, target, tolerance);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace RevitSugar.DB
         /// <returns>如果源数小于等于目标数则返回true，否则为false</returns>
         public static bool IsLessThanOrEqualWith(this double source, double target, double tolerance = 1e-5)
         {
-            return !IsGreatThan(source, target, tolerance);
+            return !IsGreaterThan(source, target, tolerance);
         }
 
         /// <summary>
