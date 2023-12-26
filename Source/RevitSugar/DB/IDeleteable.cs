@@ -15,14 +15,16 @@ namespace RevitSugar.DB
         /// </summary>
         /// <param name="elements"></param>
         /// <returns></returns>
-        IEnumerable<ElementId> DeleteElements(IEnumerable<Element> elements);
+        ICollection<ElementId> DeleteElements(IEnumerable<Element> elements);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="element"></param>
         /// <returns></returns>
-        IEnumerable<ElementId> DeleteElement(Element element);
+        ICollection<ElementId> DeleteElement(Element element);
+
+        
     }
 
     public class Deleteable : IDeleteable
@@ -35,16 +37,16 @@ namespace RevitSugar.DB
         }
 
         /// <inheritdoc/>
-        public IEnumerable<ElementId> DeleteElement(Element element)
+        public ICollection<ElementId> DeleteElement(Element element)
         {
-            return _doc.Delete(element.Id).Select(i => i);
+            return _doc.Delete(element.Id);
         }
 
         /// <inheritdoc/>
-        public IEnumerable<ElementId> DeleteElements(IEnumerable<Element> elements)
+        public ICollection<ElementId> DeleteElements(IEnumerable<Element> elements)
         {
             var ids = elements.Select(i => i.Id).ToArray();
-            return _doc.Delete(ids).Select(i => i);
+            return _doc.Delete(ids);
         }
     }
 }

@@ -101,11 +101,11 @@ namespace RevitSugar.DB
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="doc"></param>
+        /// <param name="element"></param>
         /// <returns></returns>
-        public static IUpdateable AsUpdateable(this Document doc)
+        public static IUpdateable AsUpdateable(this Element element)
         {
-            return new Updateable(doc);
+            return new Updateable(element);
         }
 
         /// <summary>

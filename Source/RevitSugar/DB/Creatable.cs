@@ -36,6 +36,26 @@ namespace RevitSugar.DB
             return _doc.Create.NewFamilyInstance(curve, symbol, level, structuralType);
         }
 
+        public FamilyInstance CreateStructuralColumn(XYZ location, FamilySymbol symbol, Level level, StructuralType structuralType = StructuralType.Column)
+        {
+            if (location is null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            if (symbol is null)
+            {
+                throw new ArgumentNullException(nameof(symbol));
+            }
+
+            if (level is null)
+            {
+                throw new ArgumentNullException(nameof(level));
+            }
+
+            return _doc.Create.NewFamilyInstance(location, symbol, level, structuralType);
+        }
+
         public FamilyInstance CreateDetailComponents(Line line, FamilySymbol symbol, View specView)
         {
             if (line is null)
@@ -56,7 +76,7 @@ namespace RevitSugar.DB
             return _doc.Create.NewFamilyInstance(line, symbol, specView);
         }
 
-        public FamilyInstance CreateDoor(XYZ location, FamilySymbol symbol, Element host, StructuralType structuralType = StructuralType.NonStructural)
+        public FamilyInstance CreateDoor(XYZ location, FamilySymbol symbol, Element host, Level level, StructuralType structuralType = StructuralType.NonStructural)
         {
             if (location is null)
             {
@@ -72,7 +92,13 @@ namespace RevitSugar.DB
             {
                 throw new ArgumentNullException(nameof(host));
             }
-            return _doc.Create.NewFamilyInstance(location, symbol, host, structuralType);
+
+            if (level is null)
+            {
+                throw new ArgumentNullException(nameof(level));
+            }
+
+            return _doc.Create.NewFamilyInstance(location, symbol, host, level, structuralType);
         }
 
         public Floor CreateFloor(CurveArray profile, bool structural)
@@ -152,6 +178,26 @@ namespace RevitSugar.DB
                 throw new ArgumentNullException(nameof(host));
             }
             return _doc.Create.NewFamilyInstance(location, symbol, host, structuralType);
+        }
+
+        public FamilyInstance CreateColumn(XYZ location, FamilySymbol symbol, Level level, StructuralType structuralType = StructuralType.NonStructural)
+        {
+            if (location is null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            if (symbol is null)
+            {
+                throw new ArgumentNullException(nameof(symbol));
+            }
+
+            if (level is null)
+            {
+                throw new ArgumentNullException(nameof(level));
+            }
+
+            return _doc.Create.NewFamilyInstance(location, symbol, level, structuralType);
         }
     }
 

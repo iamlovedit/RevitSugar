@@ -9,6 +9,8 @@ namespace RevitSugar.DB
     /// </summary>
     public interface ICreatable
     {
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -46,7 +48,7 @@ namespace RevitSugar.DB
         /// <param name="host"></param>
         /// <param name="structuralType"></param>
         /// <returns></returns>
-        FamilyInstance CreateDoor(XYZ location, FamilySymbol symbol, Element host, StructuralType structuralType = StructuralType.NonStructural);
+        FamilyInstance CreateDoor(XYZ location, FamilySymbol symbol, Element host, Level level, StructuralType structuralType = StructuralType.NonStructural);
 
         /// <summary>
         /// 
@@ -66,7 +68,28 @@ namespace RevitSugar.DB
         /// <param name="level"></param>
         /// <param name="structuralType"></param>
         /// <returns></returns>
-        FamilyInstance CreateBeam(Curve curve,FamilySymbol symbol,Level level, StructuralType structuralType = StructuralType.Beam);
+        FamilyInstance CreateBeam(Curve curve, FamilySymbol symbol, Level level, StructuralType structuralType = StructuralType.Beam);
+
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="symbol"></param>
+        /// <param name="level"></param>
+        /// <param name="structuralType"></param>
+        /// <returns></returns>
+        FamilyInstance CreateStructuralColumn(XYZ location, FamilySymbol symbol, Level level, StructuralType structuralType = StructuralType.Column);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="symbol"></param>
+        /// <param name="level"></param>
+        /// <param name="structuralType"></param>
+        /// <returns></returns>
+        FamilyInstance CreateColumn(XYZ location, FamilySymbol symbol, Level level, StructuralType structuralType = StructuralType.NonStructural);
 
         /// <summary>
         /// 
@@ -76,6 +99,9 @@ namespace RevitSugar.DB
         /// <param name="specView"></param>
         /// <returns></returns>
         FamilyInstance CreateDetailComponents(Line line, FamilySymbol symbol, View specView);
+
+
+
         /// <summary>
         /// 
         /// </summary>
